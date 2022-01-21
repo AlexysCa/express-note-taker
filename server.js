@@ -45,15 +45,30 @@ function userNewNote(body, notesList) {
     return noteInput;
 }
 
+// function to delete notes
+function deleteNotes(id, notesList) {
+    for (let i = 0; i < notesList.length; i++) {
+        let selectedNote = notesList[i];
+    if (selectedNote.id == id) {
+        notesList.splice(i, 1);
+        fs.writeFileSync(path.join(__dirname, './Develop/db/db.json'),
+        JSON.stringify(notesList, null, 2)
+        );
+    break;
+        }
+    }    
+}
+
 app.post('/api/notes', (req, res) => {
     const noteInput = userNewNote(req.body, userNotes);
     res.json(noteInput);
 })
-
-
+app.delete('/api/notes/:id', (req, res) => {
+    deleteNotes(req.params.id, userNotes);
+    res.json(true);
+});
 
 app.listen(PORT, () => {
     console.log(`API server now on port ${PORT}!`);
 });
 
-// making commit to push to heroku
