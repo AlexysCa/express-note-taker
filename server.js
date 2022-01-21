@@ -45,7 +45,7 @@ function userNewNote(body, notesList) {
     return noteInput;
 }
 
-app.post('api/notes', (req, res) => {
+app.post('/api/notes', (req, res) => {
     const noteInput = userNewNote(req.body, userNotes);
     res.json(noteInput);
 })
